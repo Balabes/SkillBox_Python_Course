@@ -7,8 +7,18 @@
 # Если номер месяца некорректен - сообщить об этом
 
 # Номер месяца получать от пользователя следующим образом
+days_31 = [1, 3, 5, 7, 8, 10, 12]
+days_30 = [4, 6, 9, 11]
+
 user_input = input("Введите, пожалуйста, номер месяца: ")
 month = int(user_input)
 print('Вы ввели', month)
-
-# TODO здесь ваш код
+if 1 < month < 12:
+    if month in  days_30:
+        print('В этом месяце 30 дней')
+    elif month in days_31:
+        print('В этом месяце 31 день')
+    else:
+        print('Это февраль, 28 дней')
+else:
+    print('Fuck You, Wrong month')
