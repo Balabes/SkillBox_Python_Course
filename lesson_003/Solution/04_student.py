@@ -10,5 +10,15 @@
 #   Студенту надо попросить ХХХ.ХХ рублей
 
 educational_grant, expenses = 10000, 12000
+total_expenses = 0
+total_grants = educational_grant * 10
 
-# TODO здесь ваш код
+month_cnt = 0
+while month_cnt < 10:
+    if month_cnt == 0:
+        total_expenses += expenses
+    else:
+        expenses *= 1.03
+        total_expenses += expenses
+    month_cnt += 1
+print(f"Студенту надо попросить {round(total_expenses - total_grants, 2)} рублей")
