@@ -13,8 +13,8 @@ days_30 = [4, 6, 9, 11]
 user_input = input("Введите, пожалуйста, номер месяца: ")
 month = int(user_input)
 print('Вы ввели', month)
-if 1 < month < 12:
-    if month in  days_30:
+if 1 <= month <= 12:
+    if month in days_30:
         print('В этом месяце 30 дней')
     elif month in days_31:
         print('В этом месяце 31 день')
