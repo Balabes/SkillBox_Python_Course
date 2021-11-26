@@ -1,5 +1,6 @@
 import random as random_gen
 
+# global hidden_number
 hidden_number = ""
 try_cnt = 0
 

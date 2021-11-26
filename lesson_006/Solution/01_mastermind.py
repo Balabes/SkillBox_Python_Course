@@ -43,7 +43,36 @@
 # Это пример применения SOLID принципа (см https://goo.gl/GFMoaI) в архитектуре программ.
 # Точнее, в этом случае важен принцип единственной ответственности - https://goo.gl/rYb3hT
 
-import mastermind_engine as me
+import mastermind_engine as engine
 
-me.hidden_number_init()
+print(
+    "Правила:\r\n"
+    "Компьютер загадывает четырехзначное число, все цифры которого различны (первая цифра числа отлична\r\n"
+    "от нуля). Игроку необходимо разгадать задуманное число. Игрок вводитчетырехзначное число c \r\n"
+    "неповторяющимися цифрами,компьютер сообщают о количестве «быков» и «коров» названном числе «бык» — цифра \r\n"
+    "есть в записи задуманного числа и стоит в той же позиции, что и в задуманном числе «корова» — цифра есть в\r\n"
+    "записи задуманного числа, но не стоит в той же позиции, что и в задуманном числе")
+
+state = True
+while state:
+    engine.hidden_number = engine.hidden_number_init()
+    print(engine.hidden_number)
+    engine.try_cnt = 0
+    while True:
+        num = str(input('Введите 4-х значное число:'))
+        engine.try_cnt += 1
+        if len(num) != 4:
+            print("Ты дурак? Сказано же: 4 ЦИФРЫ!")
+            break
+        res = engine.check_input(num)
+        print(f"Быки - {res['bull']}, Коровы - {res['cow']}")
+        if res['bull'] == 4:
+            print("Поздравляю! ты победил. Доволен? Чувствуешь себя умнее машины, чухан ебаный..?")
+            print(f"Ты потратил {engine.try_cnt} попыток")
+            ans = input("Ещё раз? y/n")
+            if ans == 'n' or ans == 'N':
+                state = False
+                break
+            else:
+                break
 
