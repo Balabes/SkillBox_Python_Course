@@ -43,7 +43,8 @@ def make_move(snowflakes):
                 snowflake[1] = 0
                 snowflake[3] = False
             else:
-                snowflake[1] -= 5
+                snowflake[1] -= rnd.randint(1, 10)
+                snowflake[0] += rnd.randint(-5, 5)
     return snowflakes
 
 
