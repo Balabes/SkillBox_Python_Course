@@ -1,7 +1,7 @@
 import random as rnd
 import simple_draw as sd
 
-N = 20
+N = 5
 snowflakes_list = []
 screen_x = 1200
 screen_y = 800
@@ -9,8 +9,7 @@ screen_y = 800
 sd.resolution = (screen_x, screen_y)
 
 
-def create_snowflakes(n=20):
-    snowflakes = []
+def create_snowflakes(snowflakes, n=20):
     for _ in range(n):
         snowflakes.append(
             [rnd.randint(0, screen_x), rnd.randint(screen_y - 200, screen_y), rnd.randint(10, 100), True])
@@ -49,7 +48,7 @@ def make_move(snowflakes):
 
 
 if __name__ == '__main__':
-    snowflakes_list = create_snowflakes()
+    create_snowflakes(snowflakes_list)
     print(snowflakes_list)
     draw_snowflakes(snowflakes_list, sd.COLOR_YELLOW)
     sd.pause()

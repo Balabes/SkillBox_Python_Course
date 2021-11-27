@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import simple_draw as sd
-from snowfall import N  # Unused import statement 'from snowfall import N'
+from snowfall import N, create_snowflakes, draw_snowflakes, del_snowflakes, make_move, get_fallen_snowflakes
 
 # На основе кода из lesson_004/05_snowfall.py
 # сделать модуль snowfall.py в котором реализовать следующие функции
@@ -15,17 +15,25 @@ from snowfall import N  # Unused import statement 'from snowfall import N'
 # обращаясь ТОЛЬКО к функциям модуля snowfall
 
 # создать_снежинки(N)
-N = 100500  # Redeclared 'N' defined above without usage
+snowflakes = []
+create_snowflakes(snowflakes, N)
 while True:
+    draw_snowflakes(snowflakes=snowflakes, color=sd.background_color)
+    make_move(snowflakes=snowflakes)
+    draw_snowflakes(snowflakes=snowflakes)
+    fallen = get_fallen_snowflakes(snowflakes=snowflakes)
+    if len(fallen):
+        draw_snowflakes(snowflakes=snowflakes, color=sd.background_color)
+        del_snowflakes(snowflakes=snowflakes, death_list=fallen)
+        create_snowflakes(snowflakes, len(fallen))
+    sd.sleep(0.1)
+    if sd.user_want_exit():
+        break
     #  нарисовать_снежинки_цветом(color=sd.background_color)
     #  сдвинуть_снежинки()
     #  нарисовать_снежинки_цветом(color)
     #  если есть номера_достигших_низа_экрана() то
     #       удалить_снежинки(номера)
     #       создать_снежинки(count)
-
-    sd.sleep(0.1)
-    if sd.user_want_exit():
-        break
 
 sd.pause()
