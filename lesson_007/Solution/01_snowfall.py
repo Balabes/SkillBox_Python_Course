@@ -17,7 +17,7 @@ sd.resolution = (screen_x, screen_y)
 
 class Snowflake:
     def __init__(self):
-        self.point = sd.get_point(random.randint(0, screen_x), random.randint(screen_y // 2, screen_y))
+        self.point = sd.get_point(random.randint(0, screen_x), random.randint(screen_y // 2, screen_y * 2))
         self.size = random.randint(25, 100)
         self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
