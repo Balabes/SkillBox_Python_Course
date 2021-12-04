@@ -4,7 +4,7 @@ from termcolor import cprint
 from random import randint
 
 
-######################################################## Часть первая
+# Часть первая
 #
 # Создать модель жизни небольшой семьи.
 #
@@ -179,20 +179,54 @@ class Wife(Man):
             self.home.dirt -= 100
 
 
+class Child(Man):
+
+    def __init__(self, name, house):
+        super().__init__(name, house)
+        self.happiness = 100
+
+    def __str__(self):
+        return super().__str__()
+
+    def act(self):
+        dice = randint(1, 3)
+        if self.hungry <= 20:
+            self.eat()
+        elif dice == 1:
+            self.sleep()
+        else:
+            cprint('{} бездельничает...'.format(self.name), color='yellow')
+
+    def eat(self):
+        if self.home.food >= 10:
+            self.hungry += 20
+            self.home.food -= 10
+            cprint('{} ест...'.format(self.name), color='yellow')
+        else:
+            cprint('{} нет еды...'.format(self.name), color='red')
+
+    def sleep(self):
+        self.hungry -= 5
+        cprint('{} спит...'.format(self.name), color='yellow')
+
+
 home = House()
 serge = Husband(name='Сережа', house=home)
 masha = Wife(name='Маша', house=home)
+kolya = Child(name='Коля', house=home)
 
 for day in range(365):
     cprint('================== День {} =================='.format(day), color='red')
     serge.act()
     masha.act()
+    kolya.act()
     home.make_mess()
     if home.dirt > 90:
         masha.happiness -= 10
         serge.happiness -= 10
     cprint(serge.__str__(), color='green')
     cprint(masha.__str__(), color='magenta')
+    cprint(kolya.__str__(), color='yellow')
     cprint(home.__str__(), color='cyan')
 
 #
@@ -237,7 +271,7 @@ for day in range(365):
 #         pass
 
 
-######################################################## Часть вторая бис
+# Часть вторая бис
 #
 # После реализации первой части надо в ветке мастер продолжить работу над семьей - добавить ребенка
 #
@@ -269,7 +303,7 @@ for day in range(365):
 # TODO после реализации второй части - отдать на проверку учителем две ветки
 
 
-######################################################## Часть третья
+# Часть третья
 #
 # после подтверждения учителем второй части (обоих веток)
 # влить в мастер все коммиты из ветки develop и разрешить все конфликты
