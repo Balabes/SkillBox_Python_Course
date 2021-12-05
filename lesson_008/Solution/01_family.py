@@ -80,12 +80,6 @@ class Man:
 
 class Husband(Man):
 
-    def __init__(self, name, house):
-        super().__init__(name=name, house=house)
-
-    def __str__(self):
-        return super().__str__()
-
     def act(self, cat):
         if self.live:
             if self.hungry <= 0 or self.happiness <= 10:
