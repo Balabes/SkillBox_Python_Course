@@ -81,7 +81,9 @@ class TextAnalyzer(metaclass=ABCMeta):
 class TAFreqSortUp(TextAnalyzer):
     def sort_result(self):
         self.sorted_static.clear()
-        self.sorted_static = sorted(self.statistic.items(), key=lambda x: x[1], )
+        self.sorted_static = sorted(self.statistic.items(), key=lambda x: x[1])
+        # https: // tproger.ru / translations / python - sorting /
+
 
 
 class TAFreqSortDown(TextAnalyzer):
