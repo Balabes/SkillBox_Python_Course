@@ -21,7 +21,6 @@
 # Упорядочивание по частоте - по убыванию. Ширину таблицы подберите по своему вкусу
 # Требования к коду: он должен быть готовым к расширению функциональности. Делать сразу на классах.
 import zipfile
-from pprint import pprint
 
 
 class TextAnalyzer:
@@ -33,17 +32,17 @@ class TextAnalyzer:
         self.alpha_counter = 0
 
     def get_file(self):
-        if self.src_file_name.endswith('.zip'):
+        if not self.src_file_name.endswith('.zip'):
+            self.file_name = self.src_file_name
+        else:
             zfile = zipfile.ZipFile(self.src_file_name, 'r')
             for filename in zfile.namelist():
                 zfile.extract(filename)
             self.file_name = filename
-        else:
-            self.file_name = self.src_file_name
         # self.file = open(self.file_name, mode='r', encoding='cp1251')
         # print(self.file.readline())
 
-    def calculate_static(self):
+    def get_alpha_static(self):
         with open(self.file_name, 'r', encoding='cp1251') as file:
             for line in file:
                 for char in line:
@@ -54,15 +53,23 @@ class TextAnalyzer:
                             self.statistic[char] = 1
         for key, item in self.statistic.items():
             self.alpha_counter += item
-        pprint(self.statistic)
-        print(f"Итого букв = {self.alpha_counter}")
 
+    def print_static(self):
+        print('+---------+----------+')
+        print('|  буква  | частота  |')
+        print('+---------+----------+')
+        for items in self.statistic.items():
+            print('|{:^9}|{:^10}|'.format(items[0], items[1]))
+        print('+---------+----------+')
+        print('|  Итого  |{:^10}|'.format(self.alpha_counter))
+        print('+---------+----------+')
 
 
 file_path = "voyna-i-mir.txt"
 ta = TextAnalyzer(file_path)
 ta.get_file()
-ta.calculate_static()
+ta.get_alpha_static()
+ta.print_static()
 # После выполнения первого этапа нужно сделать упорядочивание статистики
 #  - по частоте по возрастанию
 #  - по алфавиту по возрастанию
