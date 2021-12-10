@@ -21,9 +21,14 @@
 
 from abc import ABCMeta, abstractmethod
 
+src_file_name = "events.txt"
+
+
 class LogParser(metaclass=ABCMeta):
-    def __init__(self):
-        pass
+    def __init__(self, _src_file_name, _result_file_name):
+        self.src_file = _src_file_name
+        self.result_file = _result_file_name
+
 
 # После выполнения первого этапа нужно сделать группировку событий
 #  - по часам
