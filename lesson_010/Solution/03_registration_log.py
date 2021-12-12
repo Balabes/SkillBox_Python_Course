@@ -21,5 +21,39 @@
 # - поле емейл НЕ содержит @ и .(точку): NotEmailError (кастомное исключение)
 # - поле возраст НЕ является числом от 10 до 99: ValueError
 # Вызов метода обернуть в try-except.
+input_file = "registrations.txt"
+out_file_good = "registrations_good.log"
+out_file_bad = "registrations_bad.log"
 
-# TODO здесь ваш код
+
+class NotNameError(Exception):
+    def __str__(self):
+        return type(self).__name__
+
+
+class NotEmailError(Exception):
+    def __str__(self):
+        return type(self).__name__
+
+
+def check(_line):
+    name, mail, age = _line.split(" ")
+    if not str.isalpha(name):
+        raise NotNameError
+    elif '@' not in mail and '.' not in mail:
+        raise NotEmailError
+    elif not (10 <= int(age) <= 99):
+        raise ValueError("Age is incorrect")
+    else:
+        return True
+
+
+with open(input_file, 'r', encoding='utf8') as src_file:
+    with open(out_file_good, 'w', encoding='utf8') as good_file:
+        with open(out_file_bad, 'w', encoding='utf8') as bad_file:
+            for line in src_file:
+                try:
+                    check(line)
+                    good_file.write(line)
+                except (ValueError, NotEmailError, NotNameError) as ex:
+                    bad_file.write(str(ex) + " " + line)
