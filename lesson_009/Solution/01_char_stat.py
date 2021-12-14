@@ -85,7 +85,6 @@ class TAFreqSortUp(TextAnalyzer):
         # https: // tproger.ru / translations / python - sorting /
 
 
-
 class TAFreqSortDown(TextAnalyzer):
     def sort_result(self):
         self.sorted_static.clear()
