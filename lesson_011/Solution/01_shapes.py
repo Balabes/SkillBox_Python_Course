@@ -29,6 +29,6 @@ draw_triangle = get_polygon(n=3)
 draw_triangle(start_point=sd.get_point(200, 200), angle=13, length=100)
 
 draw_4 = get_polygon(4)
-draw_4(start_point=sd.get_point(400, 200), angle=90, length=100)
+draw_4(start_point=sd.get_point(400, 200), angle=50, length=100)
 
 sd.pause()
