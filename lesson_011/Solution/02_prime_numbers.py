@@ -49,15 +49,22 @@
 # for number in prime_number_iterator:
 #     print(number)
 
-# TODO после подтверждения части 1 преподователем, можно делать
 # Часть 2
 # Теперь нужно создать генератор, который выдает последовательность простых чисел до n
 # Распечатать все простые числа до 10000 в столбик
 
 
-# def prime_numbers_generator(n):
-#     pass
-#     # TODO здесь ваш код
+def prime_numbers_generator(n):
+    prime_numbers = []
+    for number in range(2, n + 1):
+        for prime in prime_numbers:
+            if number % prime == 0:
+                break
+        else:
+            prime_numbers.append(number)
+            yield number
+
+
 #
 #
 # for number in prime_numbers_generator(n=10000):
@@ -79,3 +86,43 @@
 # простых счастливых палиндромных чисел и так далее. Придумать не менее 2х способов.
 #
 # Подсказка: возможно, нужно будет добавить параметр в итератор/генератор.
+# from itertools import count
+
+
+def happy_filter(number):
+    src_str = str(number)
+    src_str_len = len(src_str)
+    left_sum = right_sum = 0
+    left_str = right_str = ""
+    if src_str_len % 2 == 0:  # чет
+        left_str = src_str[:src_str_len // 2]
+        right_str = src_str[src_str_len // 2:]
+    else:
+        left_str = src_str[:src_str_len // 2]
+        right_str = src_str[src_str_len // 2 + 1:]
+    for ch in left_str:
+        left_sum += int(ch)
+    for ch in right_str:
+        right_sum += int(ch)
+    if left_sum == right_sum:
+        return True
+    else:
+        return False
+
+
+# print(happy_filter(1234321))
+
+
+def pereverten_filter(number):
+    src_str = str(number)
+    reversed_str = src_str[::-1]
+    if src_str == reversed_str:
+        return True
+    else:
+        return False
+
+
+# print(pereverten_filter(123456789))
+
+for num in filter(pereverten_filter, prime_numbers_generator(n=100000)):
+    print(num, end=" ")
