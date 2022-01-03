@@ -6,11 +6,21 @@
 # Имя файла лога - function_errors.log
 # Формат лога: <имя функции> <параметры вызова> <тип ошибки> <текст ошибки>
 # Лог файл открывать каждый раз при ошибке в режиме 'a'
+import time
 
 
 def log_errors(func):
-    pass
-    # TODO здесь ваш код
+    def surrogate(*args, **kwargs):
+        try:
+            result = func(*args, **kwargs)
+            return result
+        except Exception as ex:
+            with open("function_errors.log", 'a', encoding='utf8') as file:
+                file.write(f"Date = {time.ctime()}, Function name = {func.__name__}, args = {[*args]}, "
+                           f"kwargs = {[*kwargs.items()]}, Error type = {ex.__class__.__name__}, "
+                           f"Error description = {ex}\r")
+
+    return surrogate
 
 
 # Проверить работу на следующих функциях
@@ -43,13 +53,7 @@ for line in lines:
         check_line(line)
     except Exception as exc:
         print(f'Invalid format: {exc}')
-perky(param=42)
-
+perky(param=54)
 
 # Усложненное задание (делать по желанию).
 # Написать декоратор с параметром - именем файла
-#
-# @log_errors('function_errors.log')
-# def func():
-#     pass
-

@@ -30,14 +30,15 @@ def log_parser_generator(filename):
             char = line[result_pos:result_pos + 1]
             if char == 'N':
                 if key not in events:
+                    if events.values():
+                        yield next(reversed(events.items()))
                     events[key] = 1
-                    # yield events.popitem()
                 else:
                     events[key] += 1
 
 
-# grouped_events = log_parser_generator(src_file)
-# for group_time, event_count in grouped_events:
-#     print(f'[{group_time}] {event_count}')
+grouped_events = log_parser_generator(src_file)
+for group_time, event_count in grouped_events:
+    print(f'[{group_time}] {event_count}')
 
-log_parser_generator(src_file)
+# log_parser_generator(src_file)
