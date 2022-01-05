@@ -17,6 +17,80 @@
 #       ТИКЕР7, ТИКЕР8, ТИКЕР9, ТИКЕР10, ТИКЕР11, ТИКЕР12
 # Волатильности указывать в порядке убывания. Тикеры с нулевой волатильностью упорядочить по имени.
 #
-# TODO Внимание! это задание можно выполнять только после зачета lesson_012/02_volatility_with_threads.py !!!
+import os
+import csv
+from multiprocessing import Process, Queue
 
-# TODO тут ваш код в многопроцессном стиле
+data = "trades"
+
+
+class MamkinInvestor(Process):
+
+    def __init__(self, file_name, queue_connection, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._file_name = file_name
+        self.connection = queue_connection
+        self.result = []
+
+    def run(self):
+        tmp = []
+        with open(self._file_name, 'r', encoding='utf8', newline='') as csv_file:
+            reader = csv.DictReader(csv_file)
+            for row in reader:
+                tmp.append(float(row['PRICE']))
+            _min_price, _max_price = min(tmp), max(tmp)
+            _average_price = (_min_price + _max_price) / 2
+            _volatility = ((_max_price - _min_price) / _average_price) * 100
+            self.result.append([row['SECID'], _min_price, _max_price, _average_price, _volatility])
+            self.connection.put(self.result[0])
+            tmp.clear()
+
+
+process_list = []
+result = []
+max_volatility = []
+zero_volatility = []
+min_volatility = []
+
+queue_from_process = Queue()
+
+
+def calc_volatility(path):
+    for dirpath, dirnames, filenames in os.walk(path):
+        for file in filenames:
+            file_path = os.path.join(dirpath, file)
+            process_list.append(MamkinInvestor(file_path, queue_connection=queue_from_process))
+
+    for process in process_list:
+        process.start()
+
+    for process in process_list:
+        process.join()
+
+    while not queue_from_process.empty():
+        result.append(queue_from_process.get())
+
+    result.sort(key=lambda x: x[4], reverse=True)
+    for _ in range(3):
+        max_volatility.append(result.pop(0))
+    result.sort(key=lambda x: x[4])
+    i = 0
+    for ticker in result:
+        vol = ticker[4]
+        if vol == 0.0:
+            zero_volatility.append(ticker)
+            i += 1
+    del result[0:i]
+    for _ in range(3):
+        min_volatility.append(result.pop(0))
+    print(f"max_volatility = {max_volatility}")
+    print(f"zero_volatility = {zero_volatility}")
+    print(f"min_volatility = {min_volatility}")
+
+
+def main():
+    calc_volatility(data)
+
+
+if __name__ == '__main__':  # без этого не работает!!!!
+    main()

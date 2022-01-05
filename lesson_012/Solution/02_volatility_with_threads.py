@@ -85,24 +85,3 @@ def calc_volatility(path):
 
 
 calc_volatility(data)
-# for dirpath, dirnames, filenames in os.walk(self._work_folder):
-#     for file in filenames:
-#         file_path = os.path.join(dirpath, file)
-
-
-# self._result.sort(key=lambda x: x[4], reverse=True)
-#         for _ in range(3):
-#             self._max_volatility.append(self._result.pop(0))
-#         self._result.sort(key=lambda x: x[4])
-#         i = 0
-#         for ticker in self._result:
-#             vol = ticker[4]
-#             if vol == 0.0:
-#                 self._zero_volatility.append(ticker)
-#                 i += 1
-#         del self._result[0:i]
-#         for _ in range(3):
-#             self._min_volatility.append(self._result.pop(0))
-#         print(f"_max_volatility = {self._max_volatility}")
-#         print(f"_zero_volatility = {self._zero_volatility}")
-#         print(f"_min_volatility = {self._min_volatility}")
