@@ -5,7 +5,7 @@ import random
 
 class ChatBot:
     def __init__(self):
-        self._security_key = "4e8dcdfd0b892022efaf5c7f006795a4880742339352863b374f3776a493e997e506549fc5dfe5371ed63"
+        self._security_key = ""
         self._group_id = 209994312
         self.vk = vk_api.VkApi(token=self._security_key)
         self.vk_long_poller = vk_api.bot_longpoll.VkBotLongPoll(group_id=self._group_id, vk=self.vk)
