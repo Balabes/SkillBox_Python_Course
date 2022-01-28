@@ -1,19 +1,4 @@
-from math import pow
-
-
 class InvalidChar(Exception):
-    pass
-
-
-class LongGameResult(Exception):
-    pass
-
-
-class ShortGameResult(Exception):
-    pass
-
-
-class CagleCountResult(Exception):
     pass
 
 
@@ -54,3 +39,4 @@ def game_result_parser(game_result):
 
     print(input_string)
     print(points)
+    return points

@@ -30,11 +30,15 @@
 #   Количество очков для результатов ХХХ - УУУ.
 
 import bowling
+import argparse
 
-# game_result = "X4/34"
-game_result = "X--4/34-8-/5-"
-# game_result = ","
-bowling.game_result_parser(game_result=game_result)
+parser = argparse.ArgumentParser()
+
+parser.add_argument('game_result', type=str, help='Результат игры, строка')
+
+args = parser.parse_args()
+
+bowling.game_result_parser(game_result=args.game_result)
 
 # При написании кода помнить, что заказчик может захотеть доработок и новых возможностей...
 # И, возможно, вам пригодится паттерн проектирования "Состояние",
