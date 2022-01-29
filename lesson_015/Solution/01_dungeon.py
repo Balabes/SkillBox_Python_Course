@@ -47,15 +47,49 @@
 remaining_time = '1234567890.0987654321'
 # если изначально не писать число в виде строки - теряется точность!
 field_names = ['current_location', 'current_experience', 'current_date']
+# Учитывая время и опыт, не забывайте о точности вычислений!
 
+from select import select
 import datetime
 import json
 import os
 import re
 import time
-from decimal import Decimal
-from pprint import
+import csv
+from decimal import *
+from pprint import pprint
 
 
-# Учитывая время и опыт, не забывайте о точности вычислений!
+class Game:
+    def __init__(self):
+        self._dungeon_file = "rpg.json"
+        with open(self._dungeon_file, "r") as read_file:
+            self.dungeon = json.load(read_file)
+        self.remaining_time_str = '1234567890.0987654321'
+        getcontext().prec = 50
+        self.remaining_time = Decimal(self.remaining_time_str)
+        self.exp = Decimal(0)
+        self.start_time = time.monotonic()
+        self.cur_location = "Location_0_tm0"
+        self.prev_location = ""
+        # for item in self.dungeon[self.cur_location]:
+        #     if isinstance(item, dict):
+        #         pprint(list(item)[0])
+        #     else:
+        #         pprint(item)
 
+    def print_user_interface(self):
+        print(f"Вы находитесь в {self.cur_location}")
+        print(f"У вас {self.exp} опыта и осталось {self.remaining_time} секунд")
+        elapsed_time = time.monotonic() - self.start_time
+        print(f"Прошло уже {elapsed_time}")
+        print(f"Внутри вы видите:")
+        for item in self.dungeon[self.cur_location]:
+            if isinstance(item, dict):
+                print(f"Вход в локацию {list(item)[0]}")
+            else:
+                print(f"Монстра {item}")
+
+
+g = Game()
+g.print_user_interface()
